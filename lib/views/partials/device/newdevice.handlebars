@@ -1,0 +1,96 @@
+{{#if edit}}
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-labelledby="delete" style="display: none;">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Device?</h4>
+                </div>
+                <div class="modal-body"><p>Are you sure you would like to delete <b>{{deviceDetails.deviceName}}</b>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Cancel</button>
+                    <form class="button-form" action="/device/{{deviceDetails.publicDeviceId}}/delete" method="post"><button type="submit" class="btn btn-danger btn-xs">Delete Device</button></form>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 box-col">
+            <ul class="breadcrumb breadcrub-zuul">
+                <li><a href="/">Home</a></li>
+                {{#if edit}}
+                    <li><a href="/device/{{deviceDetails.publicDeviceId}}">{{deviceDetails.deviceName}}</a></li>
+                    <li class="active">Edit Device</li>
+                {{else}}
+                    <li class="active">New Device</li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+    <div class="box box-form">
+        {{#if edit}}
+            <div class="header-flex">
+                <h2><span class="fa fa-cube"></span> Edit device</h2>
+            </div>
+        {{else}}
+            <h2><span class="fa fa-cube"></span> Create a new device!</h2>
+        {{/if}}
+        {{#if message.length}}
+            <div class="alert alert-danger">{{ message }}</div>
+        {{/if}}
+        {{#if edit}}
+            <form action="/device/{{deviceDetails.publicDeviceId}}/edit" method="post">
+        {{else}}
+            <form action="/device/new" method="post">
+        {{/if}}
+                <div class="form-group">
+                    {{#if edit}}
+                        <div class="form-group">
+                            <label>Device Name</label>
+                            <input type="text" class="form-control" name="particleDeviceName" readonly="" value="{{deviceDetails.particleDeviceName}}" required>
+                            <input type="hidden" class="form-control" name="publicDeviceId" readonly="" value="{{deviceDetails.publicDeviceId}}" required>
+                        </div>
+                    {{else}}
+                        <label>Select</label>
+                        <select class="form-control" name="particleDeviceId" id="particleDeviceSelection">
+                            <option></option>
+                            {{#each particleDeviceDetails}}
+                                <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                        <input type="hidden" class="form-control" name="particleName" id="particleDeviceNameStripper" readonly="" value="">
+                    {{/if}}
+                </div>
+                <div class="form-group">
+                    <label>Device Name</label>
+                    <input type="text" class="form-control" name="deviceName" maxlength="25" required {{#if edit}}value="{{deviceDetails.deviceName}}"{{/if}}>
+                </div>
+                <div class="form-group">
+                    <label>Device Description</label>
+                    <input type="text" class="form-control" name="deviceDescription" maxlength="50" required {{#if edit}}value="{{deviceDetails.deviceDescription}}"{{/if}}>
+                </div>
+                {{#if edit}}
+                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                {{else}}
+                    <button type="submit" class="btn btn-primary btn-sm">Create</button>
+                {{/if}}
+                <a href="./device/{{deviceDetails.publicDeviceId}}" class="btn btn-default btn-sm btn">Cancel</a>
+                {{#if edit}}
+                    <a href="#" class="btn btn-danger btn-sm btn-right" data-toggle="modal" data-target=".bs-modal-sm">Delete</a>
+                {{/if}}
+            </form>
+        <hr>
+        {{#if edit}}
+            <p><a href="/device/{{deviceDetails.publicDeviceId}}/" >Cancel</a> edit.</p>
+        {{else}}
+            <p><a href="/">Return</a> to profile.</p>
+        {{/if}}
+    </div>
+</div>
+{{#if edit}}
+{{else}}
+<script src="../../js/new-device.js"></script>
+{{/if}}

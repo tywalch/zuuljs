@@ -1,0 +1,38 @@
+<div class="content-wrapper">
+    <section class="content">
+        {{#if message.length}}
+            <div class="alert alert-success">{{ message }}</div>
+        {{/if}}
+        <div class="row">
+            <div class="col-xs-12 box-col">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title"> Welcome to zuuljs!</h3>
+                    </div>
+                    <div class="box-body">
+                        <p>Connecting and controlling your IOT device can require some setup, but there are many microcontrollers that make things a bit easier. Right now, the people over at Particle (<a href="http://particle.io">http://particle.io</a>) are doing it right. Their platform allows for very rapid development of arduino-like components that can control any real world device, sensor, or service that needs to be accessable online.</p>
+                        <p>Zuuljs was made to solve the initial problem of how to give access to the devices I make using the particle. In this sense it is for makers to deploy and non-makers to use. As a maker you create your device, add it to zuul, and make conditional keys for your friends. As a user you login and have access to devices someone has made.</p>
+                        <p>Below are instructions for both users and makers.</p>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#users" aria-controls="users" role="tab" data-toggle="tab"><p class="margin-sm">New Users</p></a></li>
+                            <li role="presentation"><a href="#makers" aria-controls="makers" role="tab" data-toggle="tab"><p class="margin-sm">Makers</p></a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="users">
+                                <h4></span> Logging In</h4>
+                                <p>Below are instructions for both users and makers.</p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="makers">
+                                <h4></span> Register with a Particle Token</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <hr>
+                        <p><a href="/">Return</a> to device management.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->

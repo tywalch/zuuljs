@@ -1,0 +1,24 @@
+<div class="container">
+
+    <div class="box box-form">
+
+        <h1>Your new device has been created!</h1>
+        <div class="box">
+            <div class="row">
+                <div class="col-lg-12">
+                        <h3>Here is your fresh new device token</h3>
+                        <p>
+                            Share this token with someone you care about!<br>
+                        </p>
+                </div>
+            </div>
+                <div class="col-lg-12">
+                    <div class="well well-sm">
+                        <h1 class="text-center">{{ deviceDetails.deviceToken }}</h1>
+                    </div>
+                </div>
+            <hr>
+            <p><a href="/device/{{deviceDetails.publicDeviceId}}">Go to</a> to {{deviceDetails.deviceName}}</p>
+        </div>
+    </div>
+</div>

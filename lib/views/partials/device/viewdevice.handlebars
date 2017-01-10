@@ -1,0 +1,248 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-12 box-col">
+                <ul class="breadcrumb breadcrub-zuul">
+                    <li><a href="/">Home</a></li>
+                    <li class="active">{{deviceDetails.deviceName}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 box-col">
+                <div class="box flex">
+                    <div id="device-status">
+                        <h2><span class="deviceConnectionIcon {{#if deviceDetails.lastStatus}}fa fa-1 text-success fa-circle{{else}}fa fa-1 text-danger fa-times{{/if}}" id="{{deviceDetails.publicDeviceId}}"></span> {{deviceDetails.deviceName}}</h2>
+                        <h4>
+                            {{deviceDetails.deviceDescription}}
+                        </h4>
+                    </div>
+                    {{#if deviceCreator}}
+                        <a href="/device/{{deviceDetails.publicDeviceId}}/edit" class="icon no-border"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{#unless deviceDetails.userId}}
+            <div class="row">
+                <div class="col-xs-12 box-col">
+                    <div class="box box-primary">
+                        <h4 class="item-inline">Unused Owner Token </h4>
+                        <h4 class="item-inline text-sunken">{{deviceDetails.deviceToken}}</h4>
+                    </div>
+                </div>
+            </div>
+        {{/unless}}
+        {{#if message.length}}
+            <div class="alert alert-success">{{ message }}</div>
+        {{/if}}
+        {{#if accessDetails.length}}
+            <div class="row">
+                <div class="col-lg-12 box-col">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">Access Log</h3>
+                        </div>
+                        <div class="box-body">
+                            <table class="table-zuul table box-table">
+                                <tr>
+                                    <th>Function</th>
+                                    <th class="text-center">User</th>
+                                    <th class="text-center">Accessed</th>
+                                </tr>
+                                {{#each accessDetails}}
+                                    <tr>
+                                        <td><b>{{functionName}}</b></br>State: "{{responseState}}"</td>
+                                        <td class="text-center">{{accessedBy}}</td>
+                                        <td class="text-center">{{accessDate}}</td>
+                                    </tr>
+                                {{/each}}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+        <div class="row">
+            <div class="col-xs-12 box-col">
+                {{#if deviceFunctionDetails.length}}
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            {{#if deviceCreator}}
+                                <h3>Manage Functions</h3>
+                            {{else}}
+                                <h3 class="box-title">Device Functions</h3>
+                            {{/if}}
+                        </div>
+                        <div class="box-body">
+                            <table class="table-zuul table box-table">
+                                <tr>
+                                    {{#if deviceCreator}}
+                                    <th class="edit-row">Edit</th>
+                                    {{/if}}
+                                    <th>Function</th>
+                                    <th class="text-center">Interact</th>
+                                </tr>
+                                {{#each deviceFunctionDetails}}
+                                    {{#if switch}}
+                                        <tr>
+                                            {{#if ../deviceCreator}}
+                                            <td class="edit-row"><a href="/function/edit/{{publicDeviceFunctionId}}"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a></td>
+                                            {{/if}}
+                                            <td><b>{{functionName}}</b></br>{{functionDescription}}</td>
+                                            <td class="text-center"><button type="submit" id="listen-{{publicDeviceFunctionId}}" class="emit-{{publicDeviceFunctionId}} functionButton btn btn-sm btn-default ">Toggle <i class="fa fa-power-off fa-lg" aria-hidden="true"></i></button></td>
+                                            <td hidden="" class="publicDeviceFunctionId">{{publicDeviceFunctionId}}</td>
+                                            <td hidden="" class="publicDeviceId">{{../publicDeviceId}}</td>
+                                            <td hidden="" class="function-type">switch</td>
+                                        </tr>
+                                    {{else if invocation}}
+                                        <tr>
+                                            {{#if ../deviceCreator}}
+                                            <td class="edit-row"><a href="/function/edit/{{publicDeviceFunctionId}}"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a></td>
+                                            {{/if}}
+                                            <td><b>{{functionName}}</b></br>{{functionDescription}}</td>
+                                            <td class="text-center"><button type="submit" class="emit-{{publicDeviceFunctionId}} functionButton btn btn-sm btn-primary ">Invoke <i class="fa fa-arrow-circle-right fa-lg" aria-hidden="true"></i></button></td>
+                                            <td hidden="" class="publicDeviceFunctionId">{{publicDeviceFunctionId}}</td>
+                                            <td hidden="" class="publicDeviceId">{{../publicDeviceId}}</td>
+                                            <td hidden="" class="function-type">invocation</td>
+                                        </tr>
+                                    {{else if string}}
+                                        <tr>
+                                            {{#if ../deviceCreator}}
+                                            <td class="edit-row"><a href="/function/edit/{{publicDeviceFunctionId}}"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a></td>
+                                            {{/if}}
+                                            <td><b>{{functionName}}</b></br>{{functionDescription}}</td>
+                                            <td class="text-center function-text">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control" id="listen-{{publicDeviceFunctionId}}" required placeholder="Enter string...">
+                                                    <span class="input-group-btn">
+                                                    <button class="emit-{{publicDeviceFunctionId}} btn btn-primary" type="button"><i class="fa fa-arrow-circle-right fa-lg" aria-hidden="true"></i></button>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td hidden="" class="publicDeviceFunctionId">{{publicDeviceFunctionId}}</td>
+                                            <td hidden="" class="publicDeviceId">{{../publicDeviceId}}</td>
+                                            <td hidden="" class="function-type">string</td>
+                                        </tr>
+                                    {{else if numeric}}
+                                        <tr>
+                                            {{#if ../deviceCreator}}
+                                            <td class="edit-row"><a href="/function/edit/{{publicDeviceFunctionId}}"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a></td>
+                                            {{/if}}
+                                            <td><b>{{functionName}}</b></br>{{functionDescription}}</td>
+                                            <td class="text-center function-text">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number" class="form-control" id="listen-{{publicDeviceFunctionId}}" placeholder="Enter number..." title="Only numeric values please">
+                                                    <span class="input-group-btn">
+                                                    <button class="emit-{{publicDeviceFunctionId}} btn btn-primary" type="button"><i class="fa fa-arrow-circle-right fa-lg" aria-hidden="true"></i></button>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td hidden="" class="publicDeviceFunctionId">{{publicDeviceFunctionId}}</td>
+                                            <td hidden="" class="publicDeviceId">{{../publicDeviceId}}</td>
+                                            <td hidden="" class="function-type">numeric</td>
+                                        </tr>
+                                    {{/if}}
+                                {{/each}}
+                            </table>
+                        </div>
+                    </div>
+                {{else}}
+                    {{#if deviceCreator}}
+                        <div class="well well-sm">
+                            <p class="lead text-center">
+                                No functions found! Click the "Create Function" button below to create a new function!
+                            </p>
+                        </div>
+                    {{else}}
+                        <div class="well well-sm">
+                            <p class="lead text-center">
+                                This device has not been configured yet!
+                            </p>
+                        </div>
+                    {{/if}}
+                {{/if}}
+                {{#if deviceCreator}}
+                    <a href="/function/new/{{deviceDetails.publicDeviceId}}" class="btn btn-primary btn-xs btn-fp">Create Function</a>
+                {{/if}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 box-col">
+                {{#if keyDetails.length}}
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">Manage Keys</h3>
+                        </div>
+                        {{#if usedKeys}}
+                            <table class="table-zuul table box-table">
+                                <tr>
+                                    <th class="edit-row">Edit</th>
+                                    <th>Assigned To</th>
+                                    <th class="text-center">Last Accessed</th>
+                                </tr>
+                                <tr>
+                                    {{#each keyDetails}}
+                                        {{#if assignedTo}}
+                                        <tr>
+                                            <td class="edit-row"><a href="/key/edit/{{publicKeyId}}"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a></td>
+                                            <td>{{assignedTo}}</td>
+                                            <td class="text-center">{{lastAccessed}}</td>
+                                        </tr>
+                                        {{/if}}
+                                    {{/each}}
+                                </tr>
+                            </table>
+                        {{/if}}
+                        {{#if unusedKeys}}
+                            <div class="box-header">
+                                <h4 class="box-title">Unused Keys</h4>
+                            </div>
+                            <table class="table-zuul table box-table">
+                                <tr>
+                                    <th class="edit-row">Edit</th>
+                                    <th>Key Tokens</th>
+                                    <th class="text-center">Expiration Date</th>
+                                </tr>
+                                <tr>
+                                    {{#each keyDetails}}
+                                        {{#if keyUserId}}
+                                            {{else}}
+                                            <tr>
+                                                <td class="edit-row"><a href="/key/edit/{{publicKeyId}}"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a></td>
+                                                <td>{{keyToken}}</td>
+                                                <td class="text-center">{{accessExpirationDate}}</td>
+                                            </tr>
+                                        {{/if}}
+                                    {{/each}}
+                                </tr>
+                            </table>
+                        {{/if}}
+                    </div>
+
+                {{else}}
+                    {{#if deviceFunctionDetails.length}}
+                        <div class="row">
+                            <div class="well well-sm">
+                                <p class="lead text-center">
+                                    No keys found! Click the "Create Key" button below to create a new key!
+                                </p>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/if}}
+                {{#if deviceFunctionDetails.length}}
+                    <a href="/key/new/{{deviceDetails.publicDeviceId}}" class="btn btn-primary btn-xs btn-fp">Create Key</a>
+                {{/if}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 box-col">
+                <ul class="breadcrumb breadcrub-zuul">
+                    <li><a href="/">Home</a></li>
+                    <li class="active">{{deviceDetails.deviceName}}</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>

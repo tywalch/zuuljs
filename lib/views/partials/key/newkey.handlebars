@@ -1,0 +1,167 @@
+{{#if edit}}
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-labelledby="delete" style="display: none;">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Key?</h4>
+                </div>
+                <div class="modal-body"><p>Are you sure you would like to delete key for <b>{{deviceDetails.deviceName}}</b>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Cancel</button>
+                    <form class="button-form" action="/key/delete/{{keyDetails.publicKeyId}}" method="post"><button type="submit" class="btn btn-danger btn-xs">Delete Key</button></form>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 box-col">
+            <ul class="breadcrumb breadcrub-zuul">
+                <li><a href="/">Home</a></li>
+                <li><a href="/device/{{deviceDetails.publicDeviceId}}">{{deviceDetails.deviceName}}</a></li>
+                {{#if edit}}
+                    <li class="active">Edit Key</li>
+                {{else}}
+                    <li class="active">New key</li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+    <div class="box box-form">
+        {{#if edit}}
+            <div class="header-flex">
+                <h2><span class="fa fa-key"></span> Edit key</h2>
+            </div>
+        {{else}}
+            <h2><span class="fa fa-key"></span> Create a new key!</h2>
+        {{/if}}
+        {{#if message.length}}
+            <div class="alert alert-danger">{{ message }}</div>
+        {{/if}}
+        {{#if edit}}
+            <form action="/key/edit/{{keyDetails.publicKeyId}}" method="post">
+        {{else}}
+            <form action="/key/new" method="post">
+        {{/if}}
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="publicDeviceId" readonly="" value="{{deviceDetails.publicDeviceId}}" required>
+            </div>
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="publicKeyId" readonly="" value="{{keyDetails.publicKeyId}}" required>
+            </div>
+            <div class="form-group">
+                <label>Device Name</label>
+                <input type="text" class="form-control" name="deviceName" readonly="" value="{{deviceDetails.deviceName}}" required>
+            </div>
+            {{#if keyDetails.assignedTo.length}}
+                {{#if edit}}
+                    <div class="form-group">
+                        <label>Assigned To</label>
+                        <input type="text" class="form-control" name="assignedTo" readonly="" value="{{keyDetails.assignedTo}}" required>
+                    </div>
+                {{/if}}
+            {{/if}}
+            <div class="form-group">
+                <label>Key Timezone</label>
+                <select class="form-control" name="keyTimeZone" required>
+                    {{#if edit}}
+                        {{#each keyTimeZone}}
+                            <option value="{{this.timezone}}" {{this.selected}}>{{this.timezone}}</option>
+                        {{/each}}
+                    {{else}}
+                        <option></option>
+                        {{#each formDetails.keyTimeZone}}
+                            <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    {{/if}}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Key Activation Date:</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="date" class="form-control pull-right" id="datepicker" placeholder="Leave blank to activate immediately" name="activationDate" {{#if edit}}value="{{editKeyDetails.accessActivationDate}}"{{/if}}>
+                </div>
+                <!-- /.input group -->
+            </div>
+            <div class="form-group">
+                <label>Key Expiration Date:</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="date" class="form-control pull-right" placeholder="Leave blank to never expire" name="expirationDate" {{#if edit}}value="{{editKeyDetails.accessExpirationDate}}"{{/if}}>
+                </div>
+                <!-- /.input group -->
+            </div>
+            <div class="form-group">
+                <label>Select Function(s)</label>
+                <select class="form-control" multiple="" name="selectedFunctions" required {{#if edit}}autofocus{{/if}}>
+                    {{#unless deviceFunctionDetails.length}}
+                    <option>No Functions Found!</option>
+                    {{/unless}}
+                    {{#each deviceFunctionDetails}}
+                        <option value="{{publicDeviceFunctionId}}" {{selected}}>{{functionName}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Access Frequency</label>
+                <div class="row">
+                    <div class="col-xs-6 col-xs-6-left">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="number" placeholder="∞" class="form-control" name="accessFrequency" max="500" {{#if edit}}value="{{keyDetails.accessFrequency}}"{{/if}}>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-xs-6-right">
+                        <div class="form-group">
+                            <label>Frequency</label>
+                            <select class="form-control" name="accessFrequencyUnits">
+                                <option>Per Day</option>
+                                <option>Per Week</option>
+                                <option>Per Month</option>
+                                <option>Per Year</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Access Times</label>
+                <div class="row">
+                    <div class="col-xs-6 col-xs-6-left">
+                        <div class="form-group">
+                            <label>Access Time Start:</label>
+                                <input type="time" class="form-control" name="accessTimeStart" {{#if edit}}value="{{editKeyDetails.accessTimeStart}}"{{/if}}>
+                            <!-- /.input group -->
+                        </div>
+                        <!-- /.form group -->
+                    </div>
+                    <div class="col-xs-6 col-xs-6-right">
+                        <div class="form-group">
+                            <label>Access Time End:</label>
+                                <input type="time" class="form-control" name="accessTimeEnd" {{#if edit}}value="{{editKeyDetails.accessTimeEnd}}"{{/if}}>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{#if edit}}
+                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+            {{else}}
+                <button type="submit" class="btn btn-primary btn-sm">Create</button>
+            {{/if}}
+            <a href="../../device/{{deviceDetails.publicDeviceId}}" class="btn btn-default btn-sm btn">Cancel</a>
+            {{#if edit}}
+            <a href="#" class="btn btn-danger btn-sm btn-right" data-toggle="modal" data-target=".bs-modal-sm">Delete</a>
+            {{/if}}
+        </form>
+        <hr>
+        <p><a href="/device/{{deviceDetails.publicDeviceId}}">Return</a> to {{deviceDetails.deviceName}}</p>
+    </div>
+</div>

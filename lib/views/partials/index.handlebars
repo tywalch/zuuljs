@@ -1,0 +1,75 @@
+<div class="content-wrapper">
+    <section class="content">
+        {{#if message.length}}
+            <div class="alert alert-success">{{ message }}</div>
+        {{/if}}
+        {{#if deviceDetails.length}}
+            <div class="row">
+                <div class="col-xs-12 box-col">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">Manage Devices</h3>
+                        </div>
+                        <table class="table box-table">
+                            <tr>
+                                <th>Device</th>
+                                <th class="text-center">Device Details</th>
+                            </tr>
+                            <tr>
+                            {{#each deviceDetails}}
+                                <tr>
+                                    <td><span class="{{publicDeviceId}} deviceConnectionIcon {{lastStatus}} {{#if lastStatus}}fa fa-1 text-success fa-circle{{else}}fa fa-1 text-danger fa-times{{/if}}" id="{{deviceDetails.publicDeviceId}}"></span> <b>{{deviceName}}</b></br> {{deviceDescription}}</td>
+                                    <td class="text-center"><a href="/device/{{publicDeviceId}}" class="btn btn-primary btn-xs btn">Access <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a></td>
+                                    <td hidden="" class="publicDeviceId">{{publicDeviceId}}</td>
+                                </tr>
+                            {{/each}}
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+        {{#if keyDetails.length}}
+            <div class="row">
+                <div class="col-xs-12 box-col">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">Manage Keys</h3>
+                        </div><!-- /.box-header -->
+                        <table class="table box-table">
+                            <tr>
+                                <th>Device</th>
+                                <th class="text-center">View Device</th>
+                            </tr>
+                            {{#each keyDetails}}
+                                <tr>
+                                    <td><span class="{{publicKeyId}} deviceConnectionIcon fa fa-circle-o-notch fa-spin fa-1 text-success"></span> <b>{{deviceName}}</b></br> {{deviceDescription}}</td>
+                                    <td class="text-center"><a href="/key/{{publicKeyId}}" class="btn btn-primary btn-xs btn {{publicKeyId}}-access" data-toggle="tooltip" data-placement="left">Access <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a></td>
+                                    <td hidden="" class="publicKeyId">{{publicKeyId}}</td>
+                                </tr>
+                            {{/each}}
+                        </table>
+                    </div><!-- /.box -->
+                </div>
+            </div>
+        {{else}}
+        <div class="row">
+            <div class="col-xs-12 box-col">
+                <div class="well well-sm">
+                    <p class="lead text-center">
+                        No keys found! Click the "Register Key" button below to register a new key!
+                    </p>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+        <div class="row">
+            <div class="col-xs-12 box-col">
+                <a href="/register" class="btn btn-primary btn-xs btn-fp">Register Key</a>
+                {{#if user.particleToken.length}}
+                        <a href="/device/new" class="btn btn-primary btn-xs btn-fp">Add Device</a>
+                {{/if}}
+            </div>
+        </div>
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->

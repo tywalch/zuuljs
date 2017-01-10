@@ -1,0 +1,133 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-12 box-col">
+                <ul class="breadcrumb breadcrub-zuul">
+                    <li><a href="/">Home</a></li>
+                    <li class="active">{{keyDetails.deviceName}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 box-col">
+                <div class="box flex">
+                    <div id="device-status">
+                        <h2><span class="deviceConnectionIcon fa fa-circle-o-notch fa-spin fa-1 text-success" id="{{keyDetails.publicKeyId}}"></span> {{keyDetails.deviceName}}</h2>
+                        <h4>
+                            {{keyDetails.deviceDescription}}
+                        </h4>
+                    </div>
+                    {{#if termDetails.accessFrequnecyTerm}}
+                        <div id="remaining-calls">
+                            <h2>{{keyDetails.remainingCalls}}/{{keyDetails.accessFrequency}}</h2>
+                            <h4>{{keyDetails.accessFrequencyUnits}}</h4>
+                        </div>
+                    {{/if}}
+                    <div class="term-details">
+                        {{#if termDetails.accessExpirationTerm}}
+                            <div class="term">
+                                <h2>{{keyDetails.accessExpirationDate}}</h2>
+                                <h4>Expires</h4>
+                            </div>
+                        {{/if}}
+                        {{#if termDetails.accessTimeTerm}}
+                            <div class="term">
+                                <h2>{{keyDetails.accessTimeStart}}</h2>
+                                <h4>Start</h4>
+                            </div>
+                            <div class="term">
+                                <h2>{{keyDetails.accessTimeEnd}}</h2>
+                                <h4>End</h4>
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{#if message.length}}
+            <div class="alert alert-success">{{ message }}</div>
+        {{/if}}
+        <div class="row">
+            <div class="col-xs-12 box-col">
+                {{#if deviceFunctionDetails.length}}
+                    <div class="box box-primary">
+                        <div class="box-header">
+                                <h3 class="box-title">Key Functions</h3>
+                        </div>
+                        <div class="box-body">
+                            <table class="table-zuul table box-table">
+                                <tr>
+                                    <th>Function</th>
+                                    <th class="text-center">Interact</th>
+                                </tr>
+                                {{#each deviceFunctionDetails}}
+                                    {{#if switch}}
+                                        <tr>
+                                            <td><b>{{functionName}}</b></br>{{functionDescription}}</td>
+                                            <td class="text-center"><button type="submit" id="listen-{{publicDeviceFunctionId}}" class="emit-{{publicDeviceFunctionId}} functionButton btn btn-sm btn-default ">Toggle <i class="fa fa-power-off" aria-hidden="true"></i></button></td>
+                                            <td hidden="" class="publicDeviceFunctionId">{{publicDeviceFunctionId}}</td>
+                                            <td hidden="" class="publicKeyId">{{../keyDetails.publicKeyId}}</td>
+                                            <td hidden="" class="function-type">switch</td>
+                                        </tr>
+                                    {{else if string}}
+                                        <tr>
+                                            <td><b>{{functionName}}</b></br>{{functionDescription}}</td>
+                                            <td class="text-center function-text">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control" id="listen-{{publicDeviceFunctionId}}" required placeholder="Enter string..." title="No special characters please">
+                                                    <span class="input-group-btn">
+                                                    <button class="emit-{{publicDeviceFunctionId}} btn btn-primary" type="button"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td hidden="" class="publicDeviceFunctionId">{{publicDeviceFunctionId}}</td>
+                                            <td hidden="" class="publicKeyId">{{../keyDetails.publicKeyId}}</td>
+                                            <td hidden="" class="function-type">string</td>
+                                        </tr>
+                                    {{else if numeric}}
+                                        <tr>
+                                            <td><b>{{functionName}}</b></br>{{functionDescription}}</td>
+                                            <td class="text-center function-text">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number" class="form-control" id="listen-{{publicDeviceFunctionId}}" placeholder="Enter number...">
+                                                    <span class="input-group-btn">
+                                                    <button class="emit-{{publicDeviceFunctionId}} btn btn-primary" type="button"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td hidden="" class="publicDeviceFunctionId">{{publicDeviceFunctionId}}</td>
+                                            <td hidden="" class="publicKeyId">{{../keyDetails.publicKeyId}}</td>
+                                            <td hidden="" class="function-type">numeric</td>
+                                        </tr>
+                                    {{else if invocation}}
+                                        <tr>
+                                            <td><b>{{functionName}}</b></br>{{functionDescription}}</td>
+                                            <td class="text-center"><button type="submit" class="emit-{{publicDeviceFunctionId}} functionButton btn btn-sm btn-primary ">Invoke <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button></td>
+                                            <td hidden="" class="publicDeviceFunctionId">{{publicDeviceFunctionId}}</td>
+                                            <td hidden="" class="publicKeyId">{{../keyDetails.publicKeyId}}</td>
+                                            <td hidden="" class="function-type">invocation</td>
+                                        </tr>
+                                    {{/if}}
+                                {{/each}}
+                            </table>
+                        </div>
+                    </div>
+                {{else}}
+                    <div class="well well-sm">
+                        <p class="lead text-center">
+                            This device has not been configured yet!
+                        </p>
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 box-col">
+                <ul class="breadcrumb breadcrub-zuul">
+                    <li><a href="/">Home</a></li>
+                    <li class="active">{{keyDetails.deviceName}}</li>
+                </ul>
+            </div>
+        </div>
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->

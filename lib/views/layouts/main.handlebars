@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>zuul : particle management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <link rel="stylesheet" href="/css/zuul.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="wrapper">
+    <header class="main-header">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <a class="navbar-brand" href="/"><span class="fa fa-lock"></span> zuul</a>
+                    </ul>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            </li>
+                            <li class="dropdown"> <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fa fa-user-circle-o"></i> {{user.firstName}} <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="/profile">Edit Profile</a>
+                                    </li>
+                                    <li><a href="/logout">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+    </header>
+
+    {{{ body }}}
+
+    <div class="box-footer">
+        <h4><a href="http://tinkertamper.com">© tinkertamper.com</a></h4>
+    </div>
+</div>
+<footer class="footer-container">
+
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+{{#if page.length}}<script src="/js/script-{{page}}.js"></script>{{/if}}
+</body>
+</html>

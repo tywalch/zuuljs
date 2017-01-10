@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="box box-register">
+        <h2><span class="fa fa-key"></span> Register a new key!</h2>
+        {{#if message.length}}
+            <div class="alert alert-danger">{{ message }}</div>
+        {{/if}}
+        <form action="/key/register" method="post">
+            <div class="form-group">
+                <label>Access Code</label>
+                <input type="text" class="form-control" name="keyToken">
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Register</button>
+        </form>
+        <hr>
+        <p><a href="/">Return</a> to profile.</p>
+    </div>
+</div>

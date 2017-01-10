@@ -1,0 +1,134 @@
+{{#if edit}}
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-labelledby="delete" style="display: none;">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Device Function?</h4>
+                </div>
+                    <div class="modal-body"><p>Are you sure you would like to delete <b>{{reqDetails.deviceFunctionDetails.functionName}}</b>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Cancel</button>
+                    <form class="button-form" action="/function/delete/{{reqDetails.deviceFunctionDetails.publicDeviceFunctionId}}" method="post"><button type="submit" class="btn btn-danger btn-xs">Delete Function</button></form>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 box-col">
+            <ul class="breadcrumb breadcrub-zuul">
+                <li><a href="/">Home</a></li>
+                <li><a href="/device/{{reqDetails.deviceDetails.publicDeviceId}}">{{reqDetails.deviceDetails.deviceName}}</a></li>
+                {{#if edit}}
+                    <li class="active">Edit Function</li>
+                {{else}}
+                    <li class="active">New Function</li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+        <div class="box box-form">
+            {{#if edit}}
+                <div class="header-flex">
+                    <h2><span class="fa fa-cogs"></span> Edit Function</h2>
+                </div>
+            {{else}}
+                <h2><span class="fa fa-cogs"></span> Create A New Function!</h2>
+            {{/if}}
+            {{#if message.length}}
+                <div class="alert alert-danger">{{ message }}</div>
+            {{/if}}
+            <!-- LOGIN FORM -->
+            {{#if edit}}
+                <form action="/function/edit/{{reqDetails.deviceFunctionDetails.publicDeviceFunctionId}}" method="post">
+            {{else}}
+                <form action="/function/new" method="post">
+            {{/if}}
+                <div class="form-group">
+                    <input type="hidden" class="form-control" name="publicDeviceId" readonly="" value="{{reqDetails.deviceDetails.publicDeviceId}}" required>
+                </div>
+                {{#if edit}}
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="publicDeviceFunctionId" readonly="" value="{{reqDetails.deviceFunctionDetails.publicDeviceFunctionId}}" required>
+                    </div>
+                {{/if}}
+                <div class="form-group">
+                    <label>Device Name</label>
+                    <input type="text" class="form-control" name="deviceName" readonly="" value="{{reqDetails.deviceDetails.deviceName}}" required>
+                </div>
+                <div class="form-group">
+                    <label>Function Name</label>
+                    <input type="text" class="form-control" name="functionName" maxlength="25" {{#if edit}}value="{{reqDetails.deviceFunctionDetails.functionName}}"{{/if}} placeholder="Leave blank to use particle function name">
+                </div>
+                <div class="form-group">
+                    <label>Select a Function</label>
+                    <select class="form-control" name="particleFunctionName" required>
+                        {{#unless reqDetails.particleFunctionDetails.length}}
+                            <option>No Functions Found!</option>
+                        {{/unless}}
+                        {{#if edit}}
+                            <option>{{reqDetails.deviceFunctionDetails.particleFunctionName}}</option>
+                        {{else}}
+                            {{#if reqDetails.particleFunctionDetails.length}}
+                                <option></option>
+                            {{/if}}
+                        {{/if}}
+                        {{#each reqDetails.particleFunctionDetails}}
+                            <option>{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Function Type</label>
+                    <select class="form-control" name="functionDataType" required>
+                        {{#unless reqDetails.formDetails.functionType.length}}
+                            <option>No Functions Found!</option>
+                        {{/unless}}
+                        {{#if reqDetails.formDetails.functionType.length}}
+                            <option></option>
+                        {{/if}}
+                        {{#each reqDetails.formDetails.functionType}}
+                            <option value="{{saveName}}" {{selected}}>{{displayName}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Assign a Variable (optional)</label>
+                    <select class="form-control" name="particleVariableName">
+                        {{#unless reqDetails.particleVariableDetails.length}}
+                            <option>No Variables Found!</option>
+                        {{/unless}}
+                        {{#if edit}}
+                            <option>{{reqDetails.deviceFunctionDetails.particleFunctionVariable}}</option>
+                        {{else}}
+                            {{#if reqDetails.particleVariableDetails.length}}
+                                <option></option>
+                            {{/if}}
+                        {{/if}}
+                        {{#each reqDetails.particleVariableDetails}}
+                            <option>{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Function Description</label>
+                    <textarea type="text" class="form-control" name="functionDescription" maxlength="50" required>{{#if edit}}{{reqDetails.deviceFunctionDetails.functionDescription}}{{/if}}</textarea>
+                </div>
+                {{#if edit}}
+                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                {{else}}
+                    <button type="submit" class="btn btn-primary btn-sm">Create</button>
+                {{/if}}
+                <a href="/device/{{reqDetails.deviceDetails.publicDeviceId}}" class="btn btn-default btn-sm btn">Cancel</a>
+                {{#if edit}}
+                    <a href="#" class="btn btn-danger btn-sm btn-right" data-toggle="modal" data-target=".bs-modal-sm">Delete</a>
+                {{/if}}
+            </form>
+            <hr>
+            <p><a href="/device/{{reqDetails.deviceDetails.publicDeviceId}}">Return</a> to {{reqDetails.deviceDetails.deviceName}}</p>
+        </div>
+    </div>
+</div>

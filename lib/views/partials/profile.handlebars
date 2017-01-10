@@ -1,0 +1,85 @@
+<div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-labelledby="delete" style="display: none;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Change Password</h4>
+            </div>
+            <form class="button-form modal-form" action="/reset" method="post">
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" name="email" readonly="" value="{{userDetails.email}}" required>
+                    <div class="form-group">
+                        <label>Old Password</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" class="form-control" name="newPassword" required>
+                        <label>Confirm</label>
+                        <input type="password" class="form-control" name="confirmNewPassword" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger btn-xs">Change</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="box box-form">
+        {{#if message.error.length}}
+            <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ message.error }}</div>
+        {{/if}}
+        {{#if message.success.length}}
+            <div class="alert alert-success alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ message.success }}</div>
+        {{/if}}
+        {{#if errorReset.length}}
+            <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ errorReset }}</div>
+        {{/if}}
+        {{#if successReset.length}}
+            <div class="alert alert-success alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ successReset }}</div>
+        {{/if}}
+        <div class="header-flex">
+            <h2><span class="fa fa-user-circle-o"></span> Edit Profile</h2>
+        </div>
+        <form action="/profile" method="post">
+            <input type="hidden" class="form-control" name="email" readonly="" value="{{userDetails.email}}" required>
+            <label>Name</label>
+            <div class="row">
+                <div class="col-xs-6 col-xs-6-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="First Name" name="firstName" value="{{userDetails.firstName}}">
+                    </div>
+                </div>
+                <div class="col-xs-6 col-xs-6-right">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Last Name" name="lastName" value="{{userDetails.lastName}}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-modal-sm">Change Password</button>
+            </div>
+            <div class="form-group">
+                <label>Particle Token</label>
+                <input type="text" class="form-control" name="particleToken" value="{{userDetails.particleToken}}">
+            </div>
+            <div class="form-group">
+                <label>Bio</label>
+                <textarea type="text" class="form-control" name="bio" maxlength="140">{{userDetails.bio}}</textarea>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                <a href="/" class="btn btn-default btn-sm btn">Cancel</a>
+            </div>
+        </form>
+        <hr>
+            <p><a href="/">Return</a> to profile.</p>
+    </div>
+</div>
+{{#if edit}}
+{{else}}
+    <script src="../../js/new-device.js"></script>
+{{/if}}

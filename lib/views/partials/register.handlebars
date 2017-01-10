@@ -1,0 +1,51 @@
+<div class="container">
+    {{#if firstRegister}}
+    <div class="box box-register">
+        <div class="text-center">
+            <h2>Welcome to zuuljs!</h2>
+            <p class="text-introduction">Zuul allows you the power to give or receive access to Particle devices!</p>
+            <p class="text-introduction">Enter a device key below to get started!</p>
+        </div>
+    </div>
+    {{/if}}
+    <div class="box box-register">
+        {{#if firstRegister}}
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#users" aria-controls="users" role="tab" data-toggle="tab"><p>New Users</p></a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><p>Makers</p></a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="users">
+                    <h3></span> Register with a new key</h3>
+        {{else}}
+        <h3><span class="fa fa-cubes"></span> Register a new key</h3>
+        {{/if}}
+        <form action="/register" method="post">
+            <div class="form-group">
+                <label>Access Code</label>
+                <input type="text" class="form-control" name="token">
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Register</button>
+        </form>
+        {{#if firstRegister}}
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="profile">
+                    <h3></span> Register with a Particle Token</h3>
+                    <form action="/register" method="post">
+                        <div class="form-group">
+                            <label>Particle Access Token</label>
+                            <input type="text" class="form-control" name="particleToken">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">Register</button>
+                    </form>    
+                </div>
+            </div>
+        {{/if}}
+        <hr>
+        {{#if firstRegister}}
+            <p>Don't know where to start? <a href="/">Visit</a> our github readme.</p>
+        {{else}}
+            <p><a href="/">Return</a> to profile.</p>
+        {{/if}}
+    </div>
+</div>

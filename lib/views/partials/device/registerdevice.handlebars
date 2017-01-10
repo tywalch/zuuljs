@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="box box-register">
+        <h2><span class="fa fa-cube"></span> Register a new device!</h2>
+        <!-- show any messages that come back with authentication -->
+        {{#if errorDetails.displayMessage.length}}
+            <div class="alert alert-danger">{{ errorDetails.displayMessage }}</div>
+        {{/if}}
+        <!-- LOGIN FORM -->
+        <form action="/device/register" method="post">
+            <div class="form-group">
+                <label>Access Code</label>
+                <input type="text" class="form-control" name="deviceToken" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Register</button>
+        </form>
+        <hr>
+        <p><a href="/">Return</a> to profile.</p>
+    </div>
+</div>
