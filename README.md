@@ -114,7 +114,7 @@ After adding a device, the next step is to configure functions and variables. Fu
 
 #### Adding New Functions
 ![alt text](https://raw.githubusercontent.com/tywalch/zuuljs/master/public/img/help/newfunction.png "Login Screen")
-Each function has three main components: The associated **Particle Function**, **Function Type, and Variable Assignment. There are four types of functions currently in zuul, they are as follows:
+Each function has three main components: The associated **Particle Function**, **Function Type**, and **Variable Assignment**. There are four types of functions currently in zuul, they are as follows:
 
 ##### Toggle Functions
 A Toggle Function is for actions that mimic a switch by toggling back and fourth between two values. Toggles could be used for light switches, door locks, or open and close something. Toggles can also show the current state of the function (if configured by the device Maker).
