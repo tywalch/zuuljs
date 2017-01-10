@@ -40,6 +40,7 @@ There may be a time when you are outside the bounds of your key’s terms, like 
 When your key has an expiration date, it is possible for that key to Expire. When this happens the Access button will be replaced with "Expired" and you will either need to have your key renewed by the person who gave it to you, or be generated a new Key to access the device. Similar to Locked, you will not be able to control the device while your key is expired.
 
 ![alt text](https://raw.githubusercontent.com/tywalch/zuuljs/master/public/img/help/viewkey.png "View Key")
+
 When you open you key you will see all the information you have access to about the device. You can see the it’s current status, the relevant terms for your key, and the functions available to you.
 
 ![alt text](https://raw.githubusercontent.com/tywalch/zuuljs/master/public/img/help/functiontypes.png "Login Screen")
