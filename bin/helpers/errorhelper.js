@@ -6,7 +6,6 @@ var database = (function(err) {
     var errorDetails = errorDefinitions.database;
     errorDetails.error = err;
     errorDetails.errorStackDetails = errorStack.getErrorStackDetails();
-    tsHelper.logGreen(errorDetails);
     return errorDetails;
 });
 

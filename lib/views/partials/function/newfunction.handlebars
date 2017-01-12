@@ -98,9 +98,6 @@
                 <div class="form-group">
                     <label>Assign a Variable (optional)</label>
                     <select class="form-control" name="particleVariableName">
-                        {{#unless reqDetails.particleVariableDetails.length}}
-                            <option>No Variables Found!</option>
-                        {{/unless}}
                         {{#if edit}}
                             <option>{{reqDetails.deviceFunctionDetails.particleFunctionVariable}}</option>
                         {{else}}

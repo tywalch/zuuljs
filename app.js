@@ -56,12 +56,17 @@ app.set('view engine', 'handlebars');
 app.use(helmet());
 
 // Routes
+//var routes = require('./lib/routes/mainroutes')(app, passport);
 require('./lib/routes/mainroutes').routes(app, passport);
 
 var port = serverConfig.port;
 var ip = serverConfig.ip;
+/*
+app.listen(port, function() {
+    console.log('Running Server on Port: ' + port);
+});
+*/
 
-// A little bit of socket/passport middleware
 var socketSession = (function(socket, next){
     sessionDetails(socket.request, {}, next);
 });

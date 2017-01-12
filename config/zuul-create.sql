@@ -1,7 +1,6 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -38,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `access` (
   KEY `userid_idx` (`userId`),
   KEY `a_devicefunctionid_idx` (`deviceFunctionId`),
   KEY `access_ibfk_3_idx` (`keyId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=45 ;
 
 -- --------------------------------------------------------
 
@@ -67,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `device` (
   UNIQUE KEY `privateDeviceId_UNIQUE` (`privateDeviceId`),
   KEY `_idx` (`userId`),
   KEY `creatorid_idx` (`creatorId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -91,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `devicefunction` (
   UNIQUE KEY `publicDeviceFunctionId_UNIQUE` (`publicDeviceFunctionId`),
   UNIQUE KEY `privateDeviceFunctionId_UNIQUE` (`privateDeviceFunctionId`),
   KEY `deviceid_idx` (`deviceId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -128,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `devicekey` (
   KEY `UserID_idx` (`userId`),
   KEY `creatorid_idx` (`creatorId`),
   KEY `creatorid_idx_keys` (`creatorId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -145,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `keyfunctionassignment` (
   UNIQUE KEY `keyfunctionassignmentid_UNIQUE` (`keyFunctionAssignmentId`),
   KEY `keyid_idx` (`keyId`),
   KEY `devicefunctionid_idx` (`deviceFunctionId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=39 ;
 
 -- --------------------------------------------------------
 
@@ -493,7 +492,7 @@ CREATE VIEW `view_verifykeytoken` AS (select `devicekey`.`keyId` AS `keyId`,`dev
 ALTER TABLE `access`
   ADD CONSTRAINT `access_ibfk_1` FOREIGN KEY (`deviceId`) REFERENCES `device` (`deviceId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `access_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `access_ibfk_3` FOREIGN KEY (`keyId`) REFERENCES `devicekey` (`keyId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `access_ibfk_3` FOREIGN KEY (`keyId`) REFERENCES `devicekey` (`keyId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `a_devicefunctionid` FOREIGN KEY (`deviceFunctionId`) REFERENCES `devicefunction` (`deviceFunctionId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

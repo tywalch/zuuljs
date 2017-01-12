@@ -67,18 +67,19 @@ var keyTermCheck = (function (reqDetails) {
 
 var keyTermRouter = (function(reqDetails) {
   return new Promise(function (resolve, reject) {
-    //console.log('keyhelper 70', reqDetails);
-    if (reqDetails.user.userId === reqDetails.keyDetails.deviceCreatorId || reqDetails.user.userId === reqDetails.keyDetails.deviceUserId) resolve(reqDetails);
     if (!reqDetails.keyDetails) reqDetails.keyDetails = reqDetails.deviceFunctionDetails;
-    return keyDB.getKeyTermsByUserAndPublicKeyId(reqDetails)
-      .then(function (reqDetails) {
-        reqDetails.keyStatus = reqDetails.keyTermDetails.keyStatus;
-        if (reqDetails.keyTermDetails.keyStatus !== 'Active') reject(reqDetails); //TODO: use key definition instead of string for Active
-        resolve(reqDetails);
-      })
-      .catch(function (reqDetails) {
-        reject(reqDetails);
-      });
+    if (reqDetails.user.userId === reqDetails.keyDetails.deviceCreatorId || reqDetails.user.userId === reqDetails.keyDetails.deviceUserId) resolve(reqDetails);
+    else { 
+      return keyDB.getKeyTermsByUserAndPublicKeyId(reqDetails)
+        .then(function (reqDetails) {
+          reqDetails.keyStatus = reqDetails.keyTermDetails.keyStatus;
+          if (reqDetails.keyTermDetails.keyStatus !== 'Active') reject(reqDetails); //TODO: use key definition instead of string for Active
+          resolve(reqDetails);
+        })
+        .catch(function (reqDetails) {
+          reject(reqDetails);
+        });
+    }
   });
 });
 
@@ -101,13 +102,14 @@ var identifyUnusedKeys = (function(reqDetails) {
     var len = reqDetails.keyDetails.length;
     if (len) {
       for (var i = 0; i < len; i++) {
+        if (reqDetails.unusedKeys && reqDetails.usedKeys) {
+          break;
+        }
         if (!reqDetails.keyDetails[i].keyUserId) {
           reqDetails.unusedKeys = true;
           continue;
-        }
-        if (reqDetails.unusedKeys && reqDetails.keyDetails[i].keyUserId) {
+        } else {
           reqDetails.usedKeys = true;
-          break;
         }
       }
     }
