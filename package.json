@@ -34,7 +34,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "rand-token": "^0.2.1",
-    "sequelize": "^3.27.0",
+    "sequelize": "^6.3.4",
     "socket.io": "^1.5.0",
     "timezone": "^1.0.6"
   }
